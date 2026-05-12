@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wiosełko – Kajaki Nida i Spływy Ponidzie</title>
+  <meta name="description" content="Rodzinna wypożyczalnia kajaków w Miąsowej. Spływy rzeką Nidą i Białą Nidą. Trasy 7–22 km, transport, kamizelki w cenie.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent:  #4fba83;
+      --gold:    #c9a96e;
+      --gold-bg: rgba(201,169,110,.08);
+      --gold-bd: rgba(201,169,110,.22);
+      --bg:      #080f0b;
+      --bg-alt:  #0c1a11;
+      --bg-card: #101e15;
+      --border:  rgba(79,186,131,.13);
+      --text:    #f0f5f2;
+      --mid:     #7fa898;
+      --nav-h:   72px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+    h1, h2, .section-title { font-family: 'Cormorant Garamond', Georgia, serif; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; inset: 0 0 auto 0; z-index: 100;
+      height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      transition: background .4s, box-shadow .4s;
+    }
+    nav::before {
+      content: ''; position: absolute; top: 0; left: 15%; right: 15%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,169,110,.5), transparent);
+      opacity: 0; transition: opacity .4s; pointer-events: none;
+    }
+    nav.scrolled::before { opacity: 1; }
+    nav.scrolled {
+      background: rgba(6,12,8,.90);
+      backdrop-filter: blur(24px) saturate(150%);
+      -webkit-backdrop-filter: blur(24px) saturate(150%);
+      box-shadow: 0 1px 0 rgba(201,169,110,.08), 0 8px 40px rgba(0,0,0,.55);
+    }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; }
+    .logo-wrap { display: flex; flex-direction: column; align-items: center; gap: 0; }
+    .logo-img {
+      height: 34px; width: auto;
+      filter: brightness(0) invert(1);
+      transform-origin: 50% 80%;
+      animation: kayak-rock 2.4s ease-in-out infinite;
+      margin-bottom: -4px;
+      position: relative; z-index: 1;
+    }
+    @keyframes kayak-rock {
+      0%   { transform: translateX(-1.5px) rotate(-1deg); }
+      50%  { transform: translateX(1.5px)  rotate(1deg); }
+      100% { transform: translateX(-1.5px) rotate(-1deg); }
+    }
+    .logo-text { padding-left: 12px; text-align: center; }
+
+    /* Pill nav */
+    .nav-pill-wrap { position: absolute; left: 50%; transform: translateX(-50%); }
+    .nav-pill-list {
+      display: flex; align-items: center; list-style: none;
+      padding: 5px; gap: 1px; position: relative;
+      background: rgba(255,255,255,.04); border-radius: 60px;
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 8px 32px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.07);
+      border: .5px solid rgba(201,169,110,.18);
+    }
+    .nav-pill-list li { position: relative; z-index: 1; }
+    .pill-link {
+      display: block; padding: 7px 18px;
+      font-size: .82rem; font-weight: 500; letter-spacing: .07em; text-transform: uppercase;
+      color: rgba(255,255,255,.42); text-decoration: none;
+      border-radius: 50px; transition: color .25s; white-space: nowrap;
+    }
+    .pill-link.active, .pill-link:hover { color: #fff; }
+    .nav-indicator {
+      position: absolute; top: 5px; height: calc(100% - 10px);
+      background: var(--gold); border-radius: 50px;
+      transition: left .4s cubic-bezier(.4,0,.2,1), width .4s cubic-bezier(.4,0,.2,1);
+      z-index: 0; pointer-events: none;
+      box-shadow: 0 0 16px rgba(201,169,110,.4);
+    }
+
+    /* hero logo */
+    .hero-logo-wrap { display: flex; flex-direction: column; align-items: center; gap: 0; margin-bottom: 2rem; }
+    .hero-logo-img {
+      height: 140px; width: auto;
+      filter: brightness(0) invert(1);
+      transform-origin: 50% 80%;
+      animation: kayak-rock 2.4s ease-in-out infinite;
+      margin-bottom: -20px;
+      position: relative; z-index: 1;
+    }
+    .hero-logo-text { padding-left: 40px; text-align: center; }
+    .hero-logo-main { display: block; font-size: 1.6rem; font-weight: 800; letter-spacing: .16em; color: #fff; text-transform: uppercase; }
+    .hero-logo-sub  { display: block; font-size: .72rem; letter-spacing: .1em; color: rgba(255,255,255,.75); text-transform: uppercase; }
+    .logo-name-main { display: block; font-size: .62rem; font-weight: 800; letter-spacing: .12em; color: #fff; text-transform: uppercase; }
+    .logo-name-sub  { display: block; font-size: .36rem; letter-spacing: .07em; color: #fff; text-transform: uppercase; }
+    .nav-cta { background: transparent; border: 1px solid var(--gold-bd); color: var(--gold); padding: .45rem 1.2rem; border-radius: 999px; font-size: .82rem; font-weight: 500; letter-spacing: .06em; text-decoration: none; transition: .22s; white-space: nowrap; }
+    .nav-cta:hover { background: var(--gold-bg); border-color: var(--gold); }
+    .nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; border: none; background: none; padding: 4px; }
+    .nav-burger span { display: block; width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: .3s; }
+    .nav-burger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-burger.active span:nth-child(2) { opacity: 0; }
+    .nav-burger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu { display: none; position: fixed; inset: var(--nav-h) 0 0 0; background: rgba(8,15,11,.97); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { color: var(--text); text-decoration: none; font-size: 1.3rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; }
+    .mobile-menu a:hover { color: var(--gold); }
+    @media (max-width: 860px) { .nav-pill-wrap { display: none; } .nav-burger { display: flex; } .nav-cta { display: none; } }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100svh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: calc(var(--nav-h) + 3rem) 6% 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background-image: url('assets/images/hero-bg.jpg');
+      background-size: cover; background-position: center;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(8,15,11,.78) 0%,
+        rgba(8,15,11,.40) 35%,
+        rgba(8,15,11,.55) 60%,
+        rgba(8,15,11,.88) 80%,
+        rgba(8,15,11,1)   100%
+      );
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 760px; }
+    .eyebrow {
+      display: inline-block;
+      font-size: .72rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.4rem;
+      position: relative;
+    }
+    .eyebrow::before, .eyebrow::after {
+      content: '—'; margin: 0 .5rem; opacity: .5;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(3.2rem, 7vw, 6rem);
+      font-weight: 600; line-height: 1.0; letter-spacing: -.01em;
+      margin-bottom: 1.6rem;
+    }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero-sub { font-size: clamp(.95rem, 1.4vw, 1.08rem); color: var(--mid); max-width: 480px; margin: 0 auto 2.8rem; line-height: 1.85; font-weight: 400; }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-block; padding: .85rem 2rem; border-radius: 999px;
+      font-size: .88rem; font-weight: 500; letter-spacing: .06em; text-decoration: none; transition: .25s;
+    }
+    .btn-primary {
+      background: var(--accent); color: #fff;
+      box-shadow: 0 0 28px rgba(79,186,131,.25);
+    }
+    .btn-primary:hover { background: #3da36f; transform: translateY(-2px); box-shadow: 0 4px 36px rgba(79,186,131,.35); }
+    .btn-outline { border: 1px solid var(--gold-bd); color: var(--gold); }
+    .btn-outline:hover { border-color: var(--gold); background: var(--gold-bg); transform: translateY(-2px); }
+    .hero-stats {
+      position: relative; z-index: 1;
+      display: flex; gap: 0; justify-content: center; margin-top: 5rem;
+      flex-wrap: wrap;
+      border: 1px solid var(--gold-bd);
+      border-radius: 16px;
+      background: rgba(8,15,11,.55);
+      backdrop-filter: blur(12px);
+      overflow: hidden;
+      max-width: 560px; margin-left: auto; margin-right: auto;
+    }
+    .hero-stat { text-align: center; flex: 1; padding: 1.4rem 1rem; border-right: 1px solid var(--gold-bd); }
+    .hero-stat:last-child { border-right: none; }
+    .hero-stat-num { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 2.4rem; font-weight: 600; color: var(--gold); line-height: 1; }
+    .hero-stat-label { font-size: .68rem; color: var(--mid); letter-spacing: .1em; text-transform: uppercase; margin-top: .4rem; }
+
+    /* ─── SECTIONS ─── */
+    .section { padding: 7rem 6%; }
+    .section-alt { background: var(--bg-alt); }
+    .section-title { font-size: clamp(2.2rem, 4vw, 3.4rem); font-weight: 600; letter-spacing: -.01em; line-height: 1.1; margin-bottom: .7rem; }
+    .section-title em { font-style: italic; color: var(--accent); }
+    .section-sub { color: var(--mid); font-size: .97rem; max-width: 520px; line-height: 1.85; margin-bottom: 3.5rem; }
+    .container { max-width: 1140px; margin: 0 auto; }
+
+    /* ─── O NAS ─── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+    .about-img-placeholder {
+      aspect-ratio: 4/3; border-radius: 20px;
+      background: linear-gradient(135deg, #0d1f14 0%, #152d1c 100%);
+      border: 1px solid var(--gold-bd);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--mid); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase;
+      position: relative; overflow: hidden;
+    }
+    .about-img-placeholder::before {
+      content: '🛶'; font-size: 5rem; position: absolute; opacity: .1;
+    }
+    .about-quote {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.35rem; font-style: italic; color: var(--text);
+      border-left: 2px solid var(--gold); padding-left: 1.5rem;
+      margin: 2rem 0; line-height: 1.7;
+    }
+    .about-list { list-style: none; display: flex; flex-direction: column; gap: .85rem; margin-top: 1.75rem; }
+    .about-list li { display: flex; align-items: flex-start; gap: .85rem; font-size: .93rem; color: var(--mid); }
+    .about-list li::before { content: '✦'; color: var(--gold); font-size: .7rem; flex-shrink: 0; margin-top: .35rem; }
+
+    /* ─── TRASY ─── */
+    .routes-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; }
+    .route-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 1.4rem 1.2rem; position: relative; overflow: hidden;
+      transition: transform .3s, box-shadow .3s, border-color .3s;
+    }
+    .route-card:hover { transform: translateY(-5px); box-shadow: 0 20px 60px rgba(0,0,0,.5); border-color: var(--gold-bd); }
+    .route-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0; transition: opacity .3s; }
+    .route-card:hover::before { opacity: 1; }
+    .route-dist { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 2.2rem; font-weight: 600; color: var(--accent); line-height: 1; margin-bottom: .2rem; }
+    .route-dist span { font-size: 1rem; font-weight: 400; color: var(--mid); }
+    .route-name { font-size: .82rem; font-weight: 600; margin-bottom: .3rem; letter-spacing: .02em; }
+    .route-time { font-size: .74rem; color: var(--mid); margin-bottom: .75rem; letter-spacing: .03em; }
+    .route-desc { font-size: .78rem; color: var(--mid); line-height: 1.7; }
+    .route-badge {
+      display: inline-block; padding: .2rem .6rem; border-radius: 999px;
+      font-size: .62rem; font-weight: 500; letter-spacing: .07em; text-transform: uppercase;
+      border: 1px solid var(--gold-bd); color: var(--gold); margin-top: .85rem; background: var(--gold-bg);
+    }
+
+    /* ─── MAPA TRAS ─── */
+    .map-modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 999;
+      background: rgba(4,10,7,.88); backdrop-filter: blur(8px);
+      align-items: center; justify-content: center;
+    }
+    .map-modal-overlay.open { display: flex; }
+    .map-modal {
+      position: relative; max-width: 90vw; max-height: 90vh;
+      border-radius: 20px; overflow: hidden;
+      border: 1px solid rgba(201,169,110,.25);
+      box-shadow: 0 0 80px rgba(0,0,0,.9);
+      background: #0a1710;
+    }
+    .map-modal img { display: block; max-width: 90vw; max-height: 85vh; width: auto; height: auto; }
+    .map-modal-close {
+      position: absolute; top: 14px; right: 14px;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(8,15,11,.8); border: 1px solid rgba(201,169,110,.3);
+      color: var(--gold); font-size: 1.1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s;
+    }
+    .map-modal-close:hover { background: rgba(201,169,110,.15); }
+    .btn-map {
+      display: inline-flex; align-items: center; gap: .6rem;
+      padding: .75rem 1.8rem; border-radius: 999px;
+      border: 1px solid var(--gold-bd); color: var(--gold);
+      background: var(--gold-bg); font-size: .88rem; font-weight: 500;
+      letter-spacing: .06em; cursor: pointer; transition: .22s;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-map:hover { background: rgba(201,169,110,.15); border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(201,169,110,.15); }
+
+    @media (max-width: 1100px) { .routes-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 700px)  { .routes-grid { grid-template-columns: 1fr; } }
+
+    /* ─── STARTY ─── */
+    .starts-grid { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
+    .start-pin {
+      display: flex; align-items: center; gap: .5rem;
+      background: var(--bg-card); border: 1px solid var(--gold-bd); border-radius: 999px;
+      padding: .5rem 1.1rem;
+      font-size: .82rem; color: var(--gold); text-decoration: none; letter-spacing: .04em;
+      transition: background .2s, box-shadow .2s;
+    }
+    .start-pin:hover { background: var(--gold-bg); box-shadow: 0 4px 20px rgba(201,169,110,.15); }
+    .start-pin::before { content: '◈'; font-size: .75rem; }
+
+    /* ─── CENNIK ─── */
+    .price-card {
+      background: var(--bg-card);
+      border: 1px solid var(--gold-bd);
+      border-radius: 24px;
+      padding: 3rem; max-width: 600px; margin: 0 auto;
+      text-align: center;
+      box-shadow: 0 0 80px rgba(201,169,110,.06);
+      position: relative; overflow: hidden;
+    }
+    .price-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .price-big { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 5.5rem; font-weight: 600; color: var(--gold); line-height: 1; }
+    .price-big span { font-size: 2rem; font-weight: 400; color: var(--mid); }
+    .price-label { color: var(--mid); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; margin-top: .5rem; margin-bottom: 2.5rem; }
+    .price-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; text-align: left; }
+    .price-list li { display: flex; align-items: flex-start; gap: .9rem; font-size: .92rem; color: var(--mid); line-height: 1.6; }
+    .price-list li::before { content: '✦'; color: var(--gold); font-size: .65rem; flex-shrink: 0; margin-top: .4rem; }
+    .price-note { margin-top: 2rem; font-size: .82rem; color: var(--mid); line-height: 1.8; background: var(--gold-bg); border: 1px solid var(--gold-bd); border-radius: 12px; padding: 1.25rem 1.5rem; text-align: left; }
+
+    /* ─── CO ZABRAĆ ─── */
+    .pack-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .pack-box { background: var(--bg-card); border: 1px solid var(--gold-bd); border-radius: 20px; padding: 2.5rem; }
+    .pack-box h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.5rem; font-weight: 600; letter-spacing: .02em; color: var(--text); margin-bottom: 1.5rem; }
+    .pack-box ul { list-style: none; display: flex; flex-direction: column; gap: .9rem; }
+    .pack-box ul li { font-size: .92rem; color: var(--mid); display: flex; gap: .75rem; align-items: flex-start; line-height: 1.6; }
+    .pack-box ul li .ico { flex-shrink: 0; }
+
+    /* ─── ATRAKCJE ─── */
+    .attractions-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
+    .attraction-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 1.6rem 1.8rem;
+      display: flex; align-items: flex-start; gap: 1.1rem;
+      text-decoration: none; color: inherit;
+      transition: border-color .25s, transform .25s, box-shadow .25s;
+    }
+    .attraction-card:hover { border-color: var(--gold-bd); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,.35); }
+    .attraction-icon { font-size: 2rem; flex-shrink: 0; line-height: 1; }
+    .attraction-name { font-size: .93rem; font-weight: 600; margin-bottom: .35rem; letter-spacing: .02em; }
+    .attraction-desc { font-size: .82rem; color: var(--mid); line-height: 1.6; }
+
+    /* ─── OPINIE ─── */
+    .reviews-wrap { position: relative; }
+    .reviews-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%); z-index: 10;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--bg-card); border: 1px solid var(--gold-bd);
+      color: var(--gold); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s, box-shadow .2s;
+      box-shadow: 0 4px 20px rgba(0,0,0,.4);
+    }
+    .reviews-arrow:hover { background: var(--gold-bg); box-shadow: 0 6px 28px rgba(0,0,0,.5); }
+    .reviews-arrow svg { width: 18px; height: 18px; }
+    .reviews-arrow-left  { left: 1.5%; }
+    .reviews-arrow-right { right: 1.5%; }
+    @media (max-width: 700px) { .reviews-arrow { display: none; } }
+    .reviews-track {
+      display: grid; grid-template-rows: 1fr; grid-auto-flow: column;
+      grid-auto-columns: clamp(280px, 32vw, 420px);
+      gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory;
+      scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; padding: .5rem 6% 1rem;
+    }
+    @media (min-width: 1025px) {
+      .reviews-track { margin: 0 5%; border-radius: 16px; overflow: hidden; }
+    }
+    .reviews-track::-webkit-scrollbar { display: none; }
+    .review-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px;
+      padding: 2.2rem 2rem 1.8rem; position: relative;
+      display: flex; flex-direction: column;
+      scroll-snap-align: start;
+      box-shadow: 0 4px 40px rgba(0,0,0,.25);
+      transition: transform .3s, box-shadow .3s, border-color .3s;
+    }
+    .review-card:hover { transform: translateY(-5px); box-shadow: 0 16px 60px rgba(0,0,0,.4); border-color: var(--gold-bd); }
+    .review-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0; transition: opacity .3s; border-radius: 20px 20px 0 0; }
+    .review-card:hover::before { opacity: 1; }
+    .review-quote { position: absolute; top: 1rem; right: 1.5rem; font-size: 7rem; font-family: 'Cormorant Garamond', Georgia, serif; color: var(--gold); opacity: .08; line-height: 1; user-select: none; }
+    .review-stars { display: flex; gap: 3px; margin-bottom: 1.2rem; }
+    .star { width: 14px; height: 14px; fill: var(--gold); }
+    .review-text { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.08rem; font-style: italic; color: var(--text); line-height: 1.75; margin-bottom: 1.6rem; flex: 1; opacity: .9; }
+    .review-author-row { display: flex; align-items: center; gap: .85rem; margin-top: auto; }
+    .review-avatar { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--gold-bd); background: var(--gold-bg); display: flex; align-items: center; justify-content: center; font-size: .85rem; font-weight: 600; color: var(--gold); flex-shrink: 0; }
+    .review-author { font-size: .88rem; font-weight: 500; color: var(--mid); letter-spacing: .03em; }
+
+    /* ─── KONTAKT ─── */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: stretch; }
+    .contact-box { background: var(--bg-card); border: 1px solid var(--gold-bd); border-radius: 20px; padding: 2.5rem; }
+    .contact-box h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.5rem; font-weight: 600; color: var(--text); margin-bottom: 1.75rem; }
+    .contact-item { display: flex; align-items: center; gap: 1.1rem; margin-bottom: 1.25rem; }
+    .contact-icon { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--gold-bd); background: var(--gold-bg); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .contact-val { font-size: .92rem; color: var(--mid); }
+    .contact-val a { color: var(--mid); text-decoration: none; transition: color .2s; }
+    .contact-val a:hover { color: var(--gold); }
+    .contact-map {
+      border-radius: 16px; overflow: hidden; border: 1px solid var(--gold-bd);
+      min-height: 420px; height: 100%; display: block;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--gold-bd); padding: 2.5rem 6%;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: .8rem; color: var(--mid); letter-spacing: .04em;
+    }
+    footer a { color: var(--mid); text-decoration: none; transition: color .2s; }
+    footer a:hover { color: var(--gold); }
+
+    /* ─── UTILS ─── */
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s ease; }
+    .fade-up.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 960px) {
+      .about-grid, .contact-grid, .pack-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+    @media (max-width: 700px) {
+      .nav-links, .nav-cta { display: none; }
+      .nav-burger { display: flex; }
+      .routes-grid { grid-template-columns: 1fr; }
+      .reviews-track { grid-auto-columns: 85vw; padding: .5rem 5% 1rem; }
+      .section { padding: 4rem 5%; }
+      footer { flex-direction: column; gap: .6rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#top" class="nav-logo">
+      <div class="logo-wrap">
+        <img class="logo-img" src="assets/images/logo.png" alt="Wiosełko">
+        <div class="logo-text">
+          <span class="logo-name-main">Wiosełko</span>
+          <span class="logo-name-sub">Wypożyczalnia Kajaków</span>
+          <span class="logo-name-sub">Świętokrzyskie</span>
+        </div>
+      </div>
+    </a>
+    <div class="nav-pill-wrap">
+      <ul class="nav-pill-list" id="pillList">
+        <li><a href="#o-nas"    class="pill-link">O nas</a></li>
+        <li><a href="#trasy"    class="pill-link">Trasy</a></li>
+        <li><a href="#cennik"   class="pill-link">Cennik</a></li>
+        <li><a href="#atrakcje" class="pill-link">Atrakcje</a></li>
+        <li><a href="#kontakt"  class="pill-link">Kontakt</a></li>
+        <span class="nav-indicator" id="navIndicator" aria-hidden="true"></span>
+      </ul>
+    </div>
+    <a href="tel:503349850" class="nav-cta">📞 503 349 850</a>
+    <button class="nav-burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#o-nas">O nas</a>
+    <a href="#trasy">Trasy</a>
+    <a href="#cennik">Cennik</a>
+    <a href="#atrakcje">Atrakcje</a>
+    <a href="#kontakt">Kontakt</a>
+    <a href="tel:503349850" style="color:var(--accent)">📞 503 349 850</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="top" class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-logo-wrap">
+        <img class="hero-logo-img" src="assets/images/logo.png" alt="Wiosełko">
+        <div class="hero-logo-text">
+          <span class="hero-logo-main">Wiosełko</span>
+          <span class="hero-logo-sub">Wypożyczalnia Kajaków</span>
+          <span class="hero-logo-sub">Świętokrzyskie</span>
+        </div>
+      </div>
+      <span class="eyebrow">Kajaki Nida · Spływy Ponidzie · Miąsowa</span>
+      <h1>Płyń z nami przez <em>Nidę</em></h1>
+      <p class="hero-sub">Rodzinna wypożyczalnia kajaków w sercu Ponidzia. Transport, kamizelki i dobra energia w cenie.</p>
+      <div class="hero-btns">
+        <a href="#trasy" class="btn btn-primary">Zobacz trasy</a>
+        <a href="#cennik" class="btn btn-outline">Cennik</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-num">7–22</div><div class="hero-stat-label">km tras</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">120</div><div class="hero-stat-label">zł / kajak</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">5</div><div class="hero-stat-label">miejsc startu</div></div>
+    </div>
+  </section>
+
+  <!-- O NAS -->
+  <section id="o-nas" class="section section-alt">
+    <div class="container">
+      <div class="about-grid">
+        <div class="fade-up">
+          <span class="eyebrow">O nas</span>
+          <h2 class="section-title">Rodzinna<br><em>wypożyczalnia</em></h2>
+          <blockquote class="about-quote">Nie szukasz kajaka. Szukasz chwili, w której w końcu nic nie musisz.</blockquote>
+          <p style="color:var(--mid);font-size:.95rem;line-height:1.8;margin-bottom:1.25rem">
+            Działamy w Miąsowej, w sercu Ponidzia — regionu pięknego, cichego i wciąż mało odkrytego. Oferujemy spływy rzekami Nidą i Białą Nidą dla rodzin, par i grup przyjaciół.
+          </p>
+          <ul class="about-list">
+            <li>Wygodne, stabilne kajaki idealne dla rodzin z dziećmi</li>
+            <li>Transport uczestników i sprzętu na trasie</li>
+            <li>Elastyczne trasy: od 7 km do całodniowych wypraw</li>
+            <li>Honorujemy Kartę Dużej Rodziny</li>
+            <li>Kamizelki asekuracyjne i wodoodporne worki w cenie</li>
+          </ul>
+        </div>
+        <div class="fade-up" style="transition-delay:.15s">
+          <div class="about-img-placeholder">Zdjęcie – placeholder</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRASY -->
+  <section id="trasy" class="section">
+    <div class="container">
+      <span class="eyebrow fade-up">Spływy</span>
+      <h2 class="section-title fade-up">Nasze <em>trasy</em></h2>
+      <p class="section-sub fade-up">Od krótkiej rekreacyjnej przejażdżki po całodniową wyprawę — każdy znajdzie coś dla siebie.</p>
+
+      <div class="routes-grid">
+
+        <div class="route-card fade-up">
+          <div class="route-dist">7 <span>km</span></div>
+          <div class="route-name">Tokarnia → Brzegi</div>
+          <div class="route-time">⏱ ok. 2 godziny</div>
+          <div class="route-desc">Krótka, spokojna trasa idealna na pierwsze kajaki lub wypad z małymi dziećmi. Przyjemny nurt, ładne widoki.</div>
+          <span class="route-badge">Rodzinna</span>
+        </div>
+
+        <div class="route-card fade-up" style="transition-delay:.1s">
+          <div class="route-dist">15 <span>km</span></div>
+          <div class="route-name">Bizoręda → Brzegi</div>
+          <div class="route-time">⏱ 4–6 godzin</div>
+          <div class="route-desc">Nasza ulubiona trasa. Malownicze meandry Nidy, naturalny tunel z wierzb i olch, idealny balans między wysiłkiem a relaksem.</div>
+          <span class="route-badge">Najpopularniejsza</span>
+        </div>
+
+        <div class="route-card fade-up" style="transition-delay:.2s">
+          <div class="route-dist">15 <span>km</span></div>
+          <div class="route-name">Brzegi → Stare Kotlice</div>
+          <div class="route-time">⏱ 4–6 godzin</div>
+          <div class="route-desc">Spokojny nurt, piękne widoki Ponidzia. Trasa pozwala cieszyć się naturą bez pośpiechu.</div>
+          <span class="route-badge">Rekreacyjna</span>
+        </div>
+
+        <div class="route-card fade-up" style="transition-delay:.1s">
+          <div class="route-dist">22 <span>km</span></div>
+          <div class="route-name">Mniszek → Brzegi</div>
+          <div class="route-time">⏱ 5–7 godzin</div>
+          <div class="route-desc">Dla wytrwałych. Jedna z najbardziej malowniczych propozycji — łączy naturę z historią Ponidzia. Czaple, kaczki, bobry na co dzień.</div>
+          <span class="route-badge">Dla wytrwałych</span>
+        </div>
+
+        <div class="route-card fade-up" style="transition-delay:.2s">
+          <div class="route-dist">22 <span>km</span></div>
+          <div class="route-name">Tokarnia → Stare Kotlice</div>
+          <div class="route-time">⏱ 5–7 godzin</div>
+          <div class="route-desc">Przebieg trzema rzekami: Czarną Nidą, Białą Nidą i Nidą. Można połączyć ze zwiedzaniem Parku Etnograficznego w Tokarni i Zamku w Sobkowie.</div>
+          <span class="route-badge">Trzy rzeki</span>
+        </div>
+
+      </div>
+
+      <div style="margin-top:2rem;text-align:center" class="fade-up">
+        <button class="btn-map" id="openMapBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+          Pokaż mapę tras
+        </button>
+      </div>
+
+      <!-- Map modal -->
+      <div class="map-modal-overlay" id="mapModal">
+        <div class="map-modal">
+          <button class="map-modal-close" id="closeMapBtn">✕</button>
+          <img src="assets/images/mapka.png" alt="Mapa spływów – Nida i Biała Nida">
+        </div>
+      </div>
+
+      <!-- Miejsca startu -->
+      <div style="margin-top:3rem">
+        <h3 class="fade-up" style="font-size:1rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem">Miejsca startu</h3>
+        <div class="starts-grid fade-up">
+          <a href="https://maps.app.goo.gl/6dvGnfwG8Wso1dcM6" target="_blank" rel="noopener" class="start-pin">Bizoręda</a>
+          <a href="https://maps.app.goo.gl/6dvGnfwG8Wso1dcM6" target="_blank" rel="noopener" class="start-pin">Mniszek</a>
+          <a href="https://maps.app.goo.gl/6dvGnfwG8Wso1dcM6" target="_blank" rel="noopener" class="start-pin">Tokarnia</a>
+          <a href="https://maps.app.goo.gl/6dvGnfwG8Wso1dcM6" target="_blank" rel="noopener" class="start-pin">Brzegi</a>
+          <a href="https://maps.app.goo.gl/6dvGnfwG8Wso1dcM6" target="_blank" rel="noopener" class="start-pin">Stare Kotlice</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CENNIK -->
+  <section id="cennik" class="section section-alt">
+    <div class="container">
+      <span class="eyebrow fade-up">Cennik</span>
+      <h2 class="section-title fade-up" style="margin-bottom:2.5rem">Ile to <em>kosztuje?</em></h2>
+      <div class="price-card fade-up">
+        <div class="price-big">120 <span>zł</span></div>
+        <div class="price-label">kajak dwuosobowy</div>
+        <ul class="price-list">
+          <li>Dzieci do 6 lat mogą płynąć jako trzecia osoba na dostawce</li>
+          <li>Transport uczestników i sprzętu na trasie bez dodatkowych opłat</li>
+          <li>Kamizelki asekuracyjne i wodoodporne worki w cenie</li>
+          <li>Spływy kilkudniowe — cena wzrasta proporcjonalnie</li>
+          <li>Honorujemy Kartę Dużej Rodziny</li>
+        </ul>
+        <div class="price-note">
+          <strong style="color:var(--text)">Godziny startu:</strong> standardowo 9:00–11:00. Możliwe zmiany po wcześniejszym kontakcie telefonicznym.<br><br>
+          <strong style="color:var(--text)">Parking:</strong> możliwość parkowania na początku lub końcu trasy, transport kierowców na start spływu bezpłatnie. Pinezki lokalizacyjne dostępne na życzenie.
+        </div>
+        <div style="margin-top:1.75rem;text-align:center">
+          <a href="tel:503349850" class="btn btn-primary">Zarezerwuj: 503 349 850</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CO ZABRAĆ -->
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow fade-up">Przygotowanie</span>
+      <h2 class="section-title fade-up">Co <em>zabrać?</em></h2>
+      <p class="section-sub fade-up">Żebyś mógł skupić się na płynięciu, a nie martwić się czy czegoś nie zapomniałeś.</p>
+      <div class="pack-grid">
+        <div class="pack-box fade-up">
+          <h3>Zabierz ze sobą</h3>
+          <ul>
+            <li><span class="ico">🧢</span> Nakrycie głowy (czapka lub kapelusz)</li>
+            <li><span class="ico">🧴</span> Krem z filtrem UV</li>
+            <li><span class="ico">💧</span> Woda do picia</li>
+            <li><span class="ico">🥪</span> Przekąski na trasę</li>
+            <li><span class="ico">👟</span> Obuwie do wody</li>
+            <li><span class="ico">🧥</span> Lekka bluza lub kurtka</li>
+            <li><span class="ico">📱</span> Telefon w etui wodoodpornym</li>
+          </ul>
+        </div>
+        <div class="pack-box fade-up" style="transition-delay:.1s">
+          <h3>Zapewniamy my</h3>
+          <ul>
+            <li><span class="ico">🦺</span> Kamizelki asekuracyjne</li>
+            <li><span class="ico">🎒</span> Wodoodporne worki na rzeczy</li>
+            <li><span class="ico">🚗</span> Transport na trasie</li>
+            <li><span class="ico">📍</span> Pinezki lokalizacyjne (na życzenie)</li>
+            <li><span class="ico">📋</span> Wsparcie organizacyjne</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPINIE -->
+  <section class="section section-alt" style="padding-left:0;padding-right:0">
+    <div class="container" style="padding: 0 6% 2rem">
+      <span class="eyebrow fade-up">Opinie</span>
+      <h2 class="section-title fade-up">Co mówią <em>klienci</em></h2>
+    </div>
+    <div class="reviews-wrap" style="position:relative">
+      <button class="reviews-arrow reviews-arrow-left" id="revLeft" aria-label="Poprzednia opinia">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="reviews-arrow reviews-arrow-right" id="revRight" aria-label="Następna opinia">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="reviews-track" id="reviewsTrack">
+
+        <div class="review-card">
+          <div class="review-quote">"</div>
+          <div class="review-stars"><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg></div>
+          <p class="review-text">Super spływ, wszystko dopięte na ostatni guzik. Organizacja na najwyższym poziomie, sprzęt czysty i w dobrym stanie. Zdecydowanie wracamy!</p>
+          <div class="review-author-row"><div class="review-avatar">K</div><div class="review-author">Kordian G.</div></div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-quote">"</div>
+          <div class="review-stars"><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg></div>
+          <p class="review-text">Profesjonalna obsługa, piękna trasa i rodzinna atmosfera. Polecam każdemu kto chce odpocząć od miasta i poczuć przyrodę Ponidzia.</p>
+          <div class="review-author-row"><div class="review-avatar">S</div><div class="review-author">Sebastian W.</div></div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-quote">"</div>
+          <div class="review-stars"><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg></div>
+          <p class="review-text">Byłem z rodziną, dzieci zachwycone. Trasa świetnie dobrana do możliwości całej grupy. Właściciel pomocny i życzliwy. Gorąco polecam!</p>
+          <div class="review-author-row"><div class="review-avatar">D</div><div class="review-author">Dariusz Ł.</div></div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-quote">"</div>
+          <div class="review-stars"><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg></div>
+          <p class="review-text">Niesamowite widoki, cisza i spokój. Kajaki w idealnym stanie. Organizacja bez zarzutu — transport zadbany, wszystko punktualnie. Wracamy za rok!</p>
+          <div class="review-author-row"><div class="review-avatar">M</div><div class="review-author">Michał M.</div></div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-quote">"</div>
+          <div class="review-stars"><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg></div>
+          <p class="review-text">Cudowny dzień na wodzie. Piękna okolica, świetna obsługa. Dzieci wyjątkowo zadowolone. Polecamy całą rodziną!</p>
+          <div class="review-author-row"><div class="review-avatar">M</div><div class="review-author">Małgorzata i Marta K.</div></div>
+        </div>
+
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:2rem; padding-bottom:1rem">
+      <a href="https://www.google.com/search?num=10&sxsrf=ANbL-n57EPWr4uRsUrZfVq_TwYQIIC0J6Q:1778608434827&q=Wiose%C5%82ko+%E2%80%93+Kajaki+Nida+i+Sp%C5%82ywy+Ponidzie&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOR_EySunD3NhqyKUdrlfl8qrSKQsmyWSLNN4-oV4L7PH4RvrqUaDms3cF1bHtXXy0yvwSvw%3D&uds=ALYpb_lXsmvMg5MAECtCjVeaKkFtBmQ_2m7le2-jE2X4ItVaTTqB8L565AWC4WAxrirYLC6waLNk-ZRi-9RpTSPRNmct3DwgVDKjHqyJBjOjh-WZH_fEFY1h7tSRsY1Gnr0ckYuKl1wMw4zcJ4ddLtI-xkRyxWh6dw" target="_blank" rel="noopener" class="btn btn-outline" style="display:inline-flex;align-items:center;gap:.6rem">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        Więcej opinii znajdziesz na Google
+      </a>
+    </div>
+  </section>
+
+  <!-- ATRAKCJE -->
+  <section id="atrakcje" class="section">
+    <div class="container">
+      <span class="eyebrow fade-up">W pobliżu</span>
+      <h2 class="section-title fade-up">Atrakcje <em>Ponidzia</em></h2>
+      <p class="section-sub fade-up">Połącz spływ ze zwiedzaniem — okolica ma wiele do zaoferowania.</p>
+      <div class="attractions-grid">
+        <a href="https://zamek.checiny.pl/pl/" target="_blank" rel="noopener" class="attraction-card fade-up">
+          <div class="attraction-icon">🏰</div>
+          <div><div class="attraction-name">Zamek Królewski w Chęcinach</div><div class="attraction-desc">Jedna z najpiękniejszych ruin zamkowych w Polsce, widok na całe Ponidzie.</div></div>
+        </a>
+        <a href="https://jaskiniaraj.pl/" target="_blank" rel="noopener" class="attraction-card fade-up" style="transition-delay:.05s">
+          <div class="attraction-icon">🌌</div>
+          <div><div class="attraction-name">Jaskinia Raj</div><div class="attraction-desc">Zachwycająca jaskinia ze stalaktytami i stalagmitami, odkryta w 1964 roku.</div></div>
+        </a>
+        <a href="https://mwk.com.pl/" target="_blank" rel="noopener" class="attraction-card fade-up" style="transition-delay:.1s">
+          <div class="attraction-icon">🏞️</div>
+          <div><div class="attraction-name">Park Etnograficzny w Tokarni</div><div class="attraction-desc">Skansen z zabytkowymi budynkami wiejskimi z całego regionu świętokrzyskiego.</div></div>
+        </a>
+        <a href="http://www.zameksobkow.eu/" target="_blank" rel="noopener" class="attraction-card fade-up" style="transition-delay:.15s">
+          <div class="attraction-icon">🏰</div>
+          <div><div class="attraction-name">Zamek Rycerski w Sobkowie</div><div class="attraction-desc">Renesansowy zamek nad Nidą, widoczny z wody podczas spływu.</div></div>
+        </a>
+        <a href="#" class="attraction-card fade-up" style="transition-delay:.2s">
+          <div class="attraction-icon">⛪</div>
+          <div><div class="attraction-name">Drewniany kościół w Mnichowie</div><div class="attraction-desc">Zabytkowy kościół drewniany, jeden z najstarszych w regionie.</div></div>
+        </a>
+        <a href="https://www.jedrzejow.cystersi.pl/" target="_blank" rel="noopener" class="attraction-card fade-up" style="transition-delay:.25s">
+          <div class="attraction-icon">🕍</div>
+          <div><div class="attraction-name">Opactwo Cystersów w Jędrzejowie</div><div class="attraction-desc">Jedno z najstarszych opactw cysterskich w Polsce, bogate w historię.</div></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAKT -->
+  <section id="kontakt" class="section section-alt">
+    <div class="container">
+      <span class="eyebrow fade-up">Kontakt</span>
+      <h2 class="section-title fade-up">Zarezerwuj <em>spływ</em></h2>
+      <p class="section-sub fade-up">Zadzwoń lub napisz — ustalimy trasę, termin i szczegóły.</p>
+      <div class="contact-grid">
+        <div class="fade-up">
+          <div class="contact-box" style="margin-bottom:1.25rem">
+            <h3>Dane kontaktowe</h3>
+            <div class="contact-item">
+              <div class="contact-icon">📞</div>
+              <div class="contact-val"><a href="tel:503349850">503 349 850</a></div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">📞</div>
+              <div class="contact-val"><a href="tel:533740356">533 740 356</a></div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">✉️</div>
+              <div class="contact-val"><a href="mailto:nida.wioselko@gmail.com">nida.wioselko@gmail.com</a></div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">📍</div>
+              <div class="contact-val">Miąsowa, woj. świętokrzyskie<br><span style="font-size:.8rem">25 km od Kielc · 90 km od Krakowa (S7)</span></div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">📘</div>
+              <div class="contact-val"><a href="https://www.facebook.com/profile.php?id=61557449739346" target="_blank" rel="noopener">Facebook – Wiosełko</a></div>
+            </div>
+          </div>
+          <a href="tel:503349850" class="btn btn-primary" style="width:100%;text-align:center;display:block">📞 Zadzwoń i zarezerwuj</a>
+        </div>
+        <div class="fade-up" style="transition-delay:.15s">
+          <iframe
+            class="contact-map"
+            src="https://maps.google.com/maps?q=Mi%C4%85sowa+83a%2C+28-305+Mi%C4%85sowa&t=&z=15&ie=UTF8&iwloc=&output=embed"
+            allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            style="border:0;width:100%">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2025 Wiosełko – Kajaki Nida, Miąsowa</span>
+    <span><a href="mailto:nida.wioselko@gmail.com">nida.wioselko@gmail.com</a> · <a href="tel:503349850">503 349 850</a></span>
+  </footer>
+
+  <script>
+    // Mobile menu
+    const navbar = document.querySelector('nav');
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('active');
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      burger.classList.remove('active');
+    }));
+
+    // Pill nav indicator
+    const pillLinks = [...document.querySelectorAll('.pill-link')];
+    const indicator = document.getElementById('navIndicator');
+    const sectionIds = ['o-nas','trasy','cennik','atrakcje','kontakt'];
+
+    function setIndicator(link) {
+      const li = link.parentElement;
+      indicator.style.width = li.offsetWidth + 'px';
+      indicator.style.left  = li.offsetLeft  + 'px';
+      pillLinks.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+    }
+    requestAnimationFrame(() => setIndicator(pillLinks[0]));
+
+    function onScroll() {
+      navbar.classList.toggle('scrolled', scrollY > 30);
+      let current = '';
+      sectionIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= window.innerHeight * 0.4) current = id;
+      });
+      if (!current) { if (scrollY < 80) setIndicator(pillLinks[0]); return; }
+      const match = pillLinks.find(l => l.getAttribute('href') === '#' + current);
+      if (match && !match.classList.contains('active')) setIndicator(match);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    pillLinks.forEach(l => l.addEventListener('click', () => setIndicator(l)));
+
+    // Logo canvas – remove white bg, recolor to sage green
+    (function() {
+      const img = new Image();
+      img.onload = function() {
+        const canvas = document.getElementById('logoCanvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const dpr = 2;
+        const dispH = 42;
+        const dispW = Math.round(img.naturalWidth * dispH / img.naturalHeight);
+        canvas.width  = dispW * dpr;
+        canvas.height = dispH * dpr;
+        canvas.style.width  = dispW + 'px';
+        canvas.style.height = dispH + 'px';
+        ctx.scale(dpr, dpr);
+        ctx.drawImage(img, 0, 0, dispW, dispH);
+        try {
+          const id = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const d  = id.data;
+          // target: sage green rgb(120, 170, 130)
+          const tR = 120, tG = 170, tB = 130;
+          for (let i = 0; i < d.length; i += 4) {
+            if (d[i+3] < 10) continue;
+            const lum = (d[i]*0.299 + d[i+1]*0.587 + d[i+2]*0.114) / 255;
+            if (lum > 0.84) { d[i+3] = 0; continue; }
+            const dark = 1 - lum;
+            d[i]   = Math.round(tR * (0.65 + 0.35 * dark));
+            d[i+1] = Math.round(tG * (0.65 + 0.35 * dark));
+            d[i+2] = Math.round(tB * (0.65 + 0.35 * dark));
+            d[i+3] = Math.min(255, Math.round(dark * 1.25 * 255));
+          }
+          ctx.putImageData(id, 0, 0);
+        } catch(e) {
+          canvas.style.filter = 'invert(68%) sepia(28%) saturate(500%) hue-rotate(90deg)';
+        }
+      };
+      img.src = 'assets/images/logo.png';
+    })();
+
+    // Reviews arrows
+    const track = document.getElementById('reviewsTrack');
+    document.getElementById('revLeft').addEventListener('click', () => {
+      const card = track.querySelector('.review-card');
+      track.scrollBy({ left: -(card.offsetWidth + 16), behavior: 'smooth' });
+    });
+    document.getElementById('revRight').addEventListener('click', () => {
+      const card = track.querySelector('.review-card');
+      track.scrollBy({ left: card.offsetWidth + 16, behavior: 'smooth' });
+    });
+
+    // Map modal
+    const mapModal = document.getElementById('mapModal');
+    document.getElementById('openMapBtn').addEventListener('click', () => mapModal.classList.add('open'));
+    document.getElementById('closeMapBtn').addEventListener('click', () => mapModal.classList.remove('open'));
+    mapModal.addEventListener('click', e => { if (e.target === mapModal) mapModal.classList.remove('open'); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') mapModal.classList.remove('open'); });
+
+    // Fade-up on scroll
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
