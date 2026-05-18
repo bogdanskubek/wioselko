@@ -90,11 +90,19 @@
     }
     .pill-link:hover {
       color: #fff;
-      background: rgba(255,255,255,.15);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 2px 8px rgba(0,0,0,.18);
       transform: scale(1.06);
     }
-    .nav-indicator { display: none; }
+    .nav-indicator {
+      display: block; position: absolute;
+      background: rgba(255,255,255,.22);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 2px 8px rgba(0,0,0,.18);
+      border-radius: 50px;
+      height: calc(100% - 10px); top: 5px; left: 0;
+      transition: transform .35s cubic-bezier(.4,0,.2,1), width .35s cubic-bezier(.4,0,.2,1);
+      z-index: 0; pointer-events: none;
+    }
+    .pill-link { position: relative; z-index: 1; }
+    .pill-link.active { color: #fff; }
 
     /* Hero logo */
     .hero-logo-wrap { font-size: 40px; margin-bottom: 2rem; }
@@ -272,7 +280,7 @@
     @media (max-width: 700px)  { .routes-grid { grid-template-columns: 1fr; } }
 
     /* ─── STARTY ─── */
-    .starts-grid { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
+    .starts-grid { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; justify-content: center; }
     .start-pin {
       display: flex; align-items: center; gap: .5rem;
       background: var(--bg-card); border: 1px solid var(--gold-bd); border-radius: 999px;
@@ -866,6 +874,41 @@ footer { flex-direction: column; gap: .6rem; text-align: center; }
       navbar.classList.toggle('scrolled', scrollY > 30);
     }
     window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Pill nav – przesuwający się wskaźnik
+    const pillList   = document.getElementById('pillList');
+    const indicator  = document.getElementById('navIndicator');
+    const pillLinks  = document.querySelectorAll('.pill-link');
+    const navSections = ['o-nas', 'trasy', 'cennik', 'atrakcje', 'kontakt'];
+
+    function setIndicator(link) {
+      const lr = pillList.getBoundingClientRect();
+      const pr = link.getBoundingClientRect();
+      indicator.style.width     = pr.width + 'px';
+      indicator.style.transform = `translateX(${pr.left - lr.left}px)`;
+      pillLinks.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+    }
+
+    function updateNav() {
+      const scrollY = window.scrollY + window.innerHeight * 0.35;
+      let activeIdx = 0;
+      navSections.forEach((id, i) => {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= scrollY) activeIdx = i;
+      });
+      setIndicator(pillLinks[activeIdx]);
+    }
+
+    // Inicjalizacja bez animacji
+    indicator.style.transition = 'none';
+    updateNav();
+    requestAnimationFrame(() => { indicator.style.transition = ''; });
+
+    window.addEventListener('scroll', updateNav, { passive: true });
+    pillLinks.forEach(l => l.addEventListener('click', () => {
+      setIndicator(l);
+    }));
 
     // Reviews arrows
     const track = document.getElementById('reviewsTrack');
