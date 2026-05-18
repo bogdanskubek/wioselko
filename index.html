@@ -945,6 +945,21 @@ footer { flex-direction: column; gap: .6rem; text-align: center; }
     aboutDots.forEach((d, i) => d.addEventListener('click', () => { aboutGo(i); resetTimer(); }));
     resetTimer();
 
+    // Swipe na telefon
+    let touchStartX = 0;
+    document.querySelector('.about-carousel').addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].clientX;
+    }, { passive: true });
+    document.querySelector('.about-carousel').addEventListener('touchend', e => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) {
+        aboutGo(diff > 0
+          ? (aboutIdx + 1) % aboutImgs.length
+          : (aboutIdx - 1 + aboutImgs.length) % aboutImgs.length);
+        resetTimer();
+      }
+    }, { passive: true });
+
     // Fade-up on scroll
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
