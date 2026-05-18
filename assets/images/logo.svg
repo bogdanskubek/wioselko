@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 175" fill="black">
+
+  <!-- Paddle blade -->
+  <path d="M28 8 C16 16 14 36 26 44 C36 50 56 44 60 32 C64 20 54 4 42 5 C35 5 30 6 28 8Z"/>
+
+  <!-- Paddle shaft -->
+  <line x1="56" y1="40" x2="114" y2="87" stroke="black" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- Head -->
+  <circle cx="88" cy="50" r="13"/>
+
+  <!-- Neck -->
+  <rect x="84" y="61" width="9" height="7" rx="3"/>
+
+  <!-- Upper body / torso -->
+  <path d="M76 66 C70 78 72 90 76 96 C84 100 100 100 108 95 C112 88 112 76 106 66 C100 62 82 62 76 66Z"/>
+
+  <!-- Left arm reaching up to paddle -->
+  <path d="M79 70 C68 60 62 52 57 44" fill="none" stroke="black" stroke-width="7" stroke-linecap="round"/>
+
+  <!-- Right arm to lower grip -->
+  <path d="M104 78 C109 82 113 85 116 88" fill="none" stroke="black" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Kayak / canoe hull -->
+  <path d="M14 104 C18 88 52 78 92 76 C134 74 172 82 196 98 C202 106 198 118 186 122 C160 132 115 134 80 132 C46 130 20 120 14 112 C13 109 13 106 14 104Z"/>
+
+  <!-- Cockpit opening (white cutout) -->
+  <path d="M68 86 C88 82 118 82 138 88 C145 96 143 110 136 114 C116 119 90 119 72 114 C65 108 64 93 68 86Z" fill="white"/>
+
+  <!-- Water reflection under hull -->
+  <path d="M32 124 C58 118 88 120 112 122 C140 124 166 119 184 123 C192 126 190 134 180 136 C154 141 112 142 82 140 C54 138 30 135 22 131 C16 128 22 125 32 124Z" opacity="0.45"/>
+
+  <!-- Water ripple 1 -->
+  <path d="M10 146 C34 139 62 146 90 142 C118 138 146 146 170 141 C184 138 198 144 210 141" fill="none" stroke="black" stroke-width="3.5" stroke-linecap="round"/>
+
+  <!-- Water ripple 2 -->
+  <path d="M26 159 C50 152 78 159 106 155 C132 151 156 158 176 154" fill="none" stroke="black" stroke-width="2.5" stroke-linecap="round"/>
+
+</svg>

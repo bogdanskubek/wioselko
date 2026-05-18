@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regulamin – Wiosełko Kajaki Nida</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&family=Raleway:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --accent:  #4fba83;
+      --gold:    #c9a96e;
+      --gold-bg: rgba(201,169,110,.08);
+      --gold-bd: rgba(201,169,110,.22);
+      --bg:      #080f0b;
+      --bg-alt:  #0c1a11;
+      --bg-card: #101e15;
+      --border:  rgba(79,186,131,.13);
+      --text:    #f0f5f2;
+      --mid:     #7fa898;
+      --nav-h:   72px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+    nav {
+      position: fixed; inset: 0 0 auto 0; z-index: 100;
+      height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      background: rgba(6,12,8,.90);
+      backdrop-filter: blur(24px) saturate(150%);
+      -webkit-backdrop-filter: blur(24px) saturate(150%);
+      box-shadow: 0 1px 0 rgba(201,169,110,.08);
+    }
+    .kayak-logo { display: flex; flex-direction: column; align-items: center; gap: 0; text-decoration: none; font-size: 10px; }
+    .kayak-logo-img {
+      height: 3.4em; width: auto;
+      filter: brightness(0) invert(1);
+      transform-origin: 50% 80%;
+      animation: kayak-rock 2.4s ease-in-out infinite;
+      position: relative; left: -0.3em;
+      margin-bottom: -0.3em;
+    }
+    @keyframes kayak-rock {
+      0%   { transform: translateX(-1.5px) rotate(-1deg); }
+      50%  { transform: translateX(1.5px)  rotate(1deg); }
+      100% { transform: translateX(-1.5px) rotate(-1deg); }
+    }
+    .kayak-logo-text { text-align: center; }
+    .kayak-logo-name { display: block; font-family: 'Raleway', sans-serif; font-weight: 700; letter-spacing: .02em; color: #fff; text-transform: uppercase; line-height: 1.1; margin-bottom: .1em; }
+    .kayak-logo-sub  { display: block; font-family: 'Raleway', sans-serif; font-weight: 600; font-size: .55em; letter-spacing: .01em; color: rgba(255,255,255,.82); text-transform: uppercase; line-height: 1.1; }
+    .nav-back { color: var(--gold); text-decoration: none; font-size: .85rem; font-weight: 500; letter-spacing: .05em; border: 1px solid var(--gold-bd); padding: .45rem 1.2rem; border-radius: 999px; transition: .22s; }
+    .nav-back:hover { background: var(--gold-bg); border-color: var(--gold); }
+
+    .page-wrap { max-width: 780px; margin: 0 auto; padding: calc(var(--nav-h) + 4rem) 6% 5rem; }
+    .page-eyebrow { font-size: .72rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: block; }
+    .page-eyebrow::before, .page-eyebrow::after { content: '—'; margin: 0 .5rem; opacity: .5; }
+    h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 600; line-height: 1.1; margin-bottom: 3rem; border-bottom: 1px solid var(--gold-bd); padding-bottom: 1.5rem; }
+    h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.5rem; font-weight: 600; color: var(--accent); margin: 2.5rem 0 1rem; }
+    ol { padding-left: 1.4rem; }
+    ol li { margin-bottom: .55rem; }
+    ul { padding-left: 1.2rem; list-style: disc; margin: .4rem 0 .4rem 1rem; }
+    ul li { margin-bottom: .3rem; color: var(--mid); }
+    .contact-box { margin-top: 3rem; background: var(--bg-card); border: 1px solid var(--gold-bd); border-radius: 12px; padding: 1.5rem 2rem; font-size: .92rem; }
+    .contact-box p { margin-bottom: .4rem; color: var(--mid); }
+    .contact-box strong { color: var(--text); }
+    .contact-box a { color: var(--accent); text-decoration: none; }
+    .contact-box a:hover { text-decoration: underline; }
+
+    footer { border-top: 1px solid var(--gold-bd); padding: 2rem 6%; display: flex; align-items: center; font-size: .8rem; color: var(--mid); letter-spacing: .04em; }
+    footer a { color: var(--mid); text-decoration: none; }
+    footer a:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="kayak-logo">
+      <img class="kayak-logo-img" src="assets/images/logo.png" alt="Wiosełko">
+      <div class="kayak-logo-text">
+        <span class="kayak-logo-name">Wiosełko</span>
+        <span class="kayak-logo-sub">Wypożyczalnia Kajaków</span>
+        <span class="kayak-logo-sub">Świętokrzyskie</span>
+      </div>
+    </a>
+    <a href="index.html" class="nav-back">← Wróć do strony</a>
+  </nav>
+
+  <div class="page-wrap">
+    <span class="page-eyebrow">Dokumenty</span>
+    <h1>Regulamin Wypożyczalni Kajaków „Wiosełko"</h1>
+
+    <h2>1. Postanowienia ogólne</h2>
+    <ol>
+      <li>Niniejszy regulamin określa zasady korzystania ze sprzętu wypożyczanego przez Wypożyczalnię Kajaków „Wiosełko".</li>
+      <li>Regulamin jest dostępny:
+        <ul>
+          <li>na stronie internetowej Wypożyczalni,</li>
+          <li>w formie papierowej – na życzenie klienta.</li>
+        </ul>
+      </li>
+      <li>Wypożyczenie sprzętu jest równoznaczne z zapoznaniem się i akceptacją niniejszego regulaminu.</li>
+    </ol>
+
+    <h2>2. Zakres usług</h2>
+    <ol>
+      <li>Wypożyczalnia zajmuje się wyłącznie udostępnianiem sprzętu kajakowego – w szczególności kajaków, wioseł, kamizelek asekuracyjnych i innego wyposażenia.</li>
+      <li>Wypożyczalnia nie jest organizatorem spływów i nie odpowiada za ich przebieg, bezpieczeństwo uczestników ani szkody powstałe w trakcie spływu.</li>
+      <li>Sprzęt przekazywany klientowi jest sprawny technicznie i gotowy do użycia.</li>
+    </ol>
+
+    <h2>3. Odpowiedzialność klienta</h2>
+    <ol>
+      <li>Pełną odpowiedzialność za bezpieczeństwo swoje, osób towarzyszących oraz za powierzony sprzęt ponosi klient.</li>
+      <li>Klient zobowiązany jest do:
+        <ul>
+          <li>korzystania ze sprzętu zgodnie z jego przeznaczeniem,</li>
+          <li>zachowania wszelkich środków ostrożności,</li>
+          <li>dbania o powierzony sprzęt.</li>
+        </ul>
+      </li>
+      <li>Wszelkie szkody na osobie lub w sprzęcie powstałe podczas użytkowania ponosi klient.</li>
+      <li>W przypadku zagubienia lub zniszczenia sprzętu klient zobowiązuje się pokryć koszt jego odtworzenia w wysokości wartości rynkowej nowego sprzętu.</li>
+    </ol>
+
+    <h2>4. Bezpieczeństwo</h2>
+    <ol>
+      <li>Klient zobowiązany jest do korzystania z kamizelek asekuracyjnych przez cały czas trwania spływu.</li>
+      <li>Zabrania się:
+        <ul>
+          <li>pływania pod wpływem alkoholu lub innych środków odurzających,</li>
+          <li>niszczenia lub przerabiania sprzętu,</li>
+          <li>zachowań zagrażających bezpieczeństwu uczestników spływu lub innych osób na wodzie.</li>
+        </ul>
+      </li>
+    </ol>
+
+    <h2>5. Postanowienia końcowe</h2>
+    <ol>
+      <li>Regulamin wchodzi w życie z dniem opublikowania na stronie internetowej.</li>
+      <li>Wypożyczalnia „Wiosełko" zastrzega sobie prawo do zmian regulaminu – zmiany obowiązują od momentu publikacji w wersji aktualnej na stronie internetowej.</li>
+      <li>Wypożyczenie sprzętu jest równoznaczne z akceptacją wszystkich postanowień regulaminu oraz przyjęciem pełnej odpowiedzialności przez klienta.</li>
+    </ol>
+
+    <div class="contact-box">
+      <p><strong>Kontakt</strong></p>
+      <p>Wypożyczalnia Kajaków „Wiosełko"</p>
+      <p>Tel: <a href="tel:506014546">506 014 546</a></p>
+      <p>Email: <a href="mailto:nida.wioselko@gmail.com">nida.wioselko@gmail.com</a></p>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2025 Wiosełko – Kajaki Nida, Miąsowa &nbsp;·&nbsp; <a href="mailto:nida.wioselko@gmail.com">nida.wioselko@gmail.com</a> &nbsp;·&nbsp; <a href="tel:506014546">506 014 546</a></span>
+    <span style="border-left:1px solid var(--gold-bd);padding-left:1.2rem;margin-left:1.2rem"><a href="regulamin.html">Regulamin</a></span>
+    <span style="font-size:.72rem;color:rgba(255,255,255,.15);margin-left:auto">Strona wykonana przez: <a href="mailto:bskubek@gmail.com" style="color:rgba(255,255,255,.15);text-decoration:none">Bogdan Skubek</a></span>
+  </footer>
+
+</body>
+</html>
