@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://nidawioselko.pl/sitemap.xml
